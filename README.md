@@ -35,3 +35,44 @@ Each solution has it's up and downsides, for a more in-depth discussion, see Mic
 
 ## How it works
 Tenants are identified via their hostname (i.e tenant.domain.com). This information is stored in a table on the public schema. Whenever a request is made, the hostname is used to match a tenant in the database. If there’s a match, the search path is updated to use this tenant’s schema. So from now on, all queries will take place at the tenant’s schema. For example, suppose you have a tenant customer at http://customer.example.com. Any request incoming at customer.example.com will automatically use the customer’s schema and make the tenant available at the request. If no tenant is found, a 404 error is raised. This also means you should have a tenant for your main domain, typically using the public schema. For more information please read the <a href='https://django-tenants.readthedocs.io/en/latest/'>django-tenants.readthedocs.io/</a>.
+
+## Installation
+Assuming you have django installed, the first step is to install django-tenants.
+
+`pip install django-tenants`
+
+## Basic Settings
+You’ll have to make the following modifications to your settings.py file.
+
+Your DATABASE_ENGINE setting needs to be changed to
+`DATABASES = {
+    'default': {
+        'ENGINE': 'django_tenants.postgresql_backend',
+        # ..
+    }
+}`
+
+Add django_tenants.routers.TenantSyncRouter to your DATABASE_ROUTERS setting, so that the correct apps can be synced, depending on what’s being synced (shared or tenant).
+
+`DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)`
+
+`MIDDLEWARE = (
+    'django_tenants.middleware.main.TenantMainMiddleware',
+    #...
+)`
+
+`TEMPLATES = [
+    {
+        #...
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                #...
+            ],
+        },
+    },
+]`
+
+for more info <a href="https://django-tenants.readthedocs.io/en/latest/install.html">django-tenants.readthedocs</a>
