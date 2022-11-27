@@ -57,6 +57,7 @@ MIDDLEWARE = [
 ]
 
 TENANT_MODEL = "tenant.Client"
+TENANT_DOMAIN_MODEL = "tenant.Domain"
 
 
 
