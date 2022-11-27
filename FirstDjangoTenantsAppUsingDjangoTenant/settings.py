@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-plj3$mluo9+*3n1_bt-@k@tl-@)7^#-fo&5j*4btr4gapudkyr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','*.localhost','demo.localhost']
 
 
 # Application definition
@@ -41,8 +41,13 @@ SHARED_APPS = [
 ]
 
 TENANT_APPS=[
-    "django.contrib.contenttypes",
-    "django.contrib.auth",
+      'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django_tenants',
 ]
 
 MIDDLEWARE = [
